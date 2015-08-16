@@ -136,7 +136,6 @@ dcln &lt;- merge(d, dint, by=&quot;interval&quot;) ## merge in NA index
 dcln$stepsx &lt;- as.numeric(dcln$steps)
 my.na &lt;- is.na(dcln$steps)
 dcln$stepsx[my.na] &lt;- dcln$intmean[my.na] ## replace NAs with mean value</code></pre>
-<p>Make a histogram of the total number of steps taken each day and Calculate and report the mean and median total number of steps taken per day.</p>
 </div>
 <div id="histogram-of-total-number-of-steps-taken-per-day" class="section level3">
 <h3>Histogram of total number of steps taken per day</h3>
@@ -151,13 +150,14 @@ dmeanx</code></pre>
 <pre class="r"><code>dmedianx &lt;- median(dclns$sumstepsx) ## median of total number of steps
 dmedianx</code></pre>
 <pre><code>## [1] 10765</code></pre>
-<p>Do these values differ from the estimates from the first part of the assignment? What is the impact of imputing missing data on the estimates of the total daily number of steps?</p>
-<p>As can be seen from the values below, there is no difference between the original mean and median values from the estimated ones because the inputed values are the same as the mean and median from the original dataset.</p>
+<p>Calculate difference between the mean and median of the original dataset vs. the revised dataset with inputted values</p>
 <pre class="r"><code>## difference in mean and median values with and without inputing
 dmean - dmeanx</code></pre>
 <pre><code>## [1] 0</code></pre>
 <pre class="r"><code>dmedian - dmedianx</code></pre>
 <pre><code>## [1] 0</code></pre>
+<p>As can be seen from the values above, there is no difference between the original mean and median values from the estimated ones because the inputed values are the same as the mean and median from the original dataset.</p>
+<p>original mean - inputted mean = 0</p>
 </div>
 <div id="are-there-differences-in-activity-patterns-between-weekdays-and-weekends" class="section level3">
 <h3>Are there differences in activity patterns between weekdays and weekends?</h3>

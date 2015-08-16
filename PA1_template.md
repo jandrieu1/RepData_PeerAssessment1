@@ -1,5 +1,3 @@
-# Reproducible Research: Peer Assessment 1
-
 ---
 title: "Reproducible Research: Peer Assessment 1"
 
@@ -84,7 +82,6 @@ my.na <- is.na(dcln$steps)
 dcln$stepsx[my.na] <- dcln$intmean[my.na] ## replace NAs with mean value
 ```
 
-Make a histogram of the total number of steps taken each day and Calculate and report the mean and median total number of steps taken per day.
 
 ### Histogram of total number of steps taken per day
 
@@ -101,15 +98,18 @@ dmedianx <- median(dclns$sumstepsx) ## median of total number of steps
 dmedianx
 ```
 
-Do these values differ from the estimates from the first part of the assignment? What is the impact of imputing missing data on the estimates of the total daily number of steps?
-
-As can be seen from the values below, there is no difference between the original mean and median values from the estimated ones because the inputed values are the same as the mean and median from the original dataset.
+Calculate difference between the mean and median of the original dataset vs. the revised dataset with inputted values
 
 ```{r, echo=TRUE}
 ## difference in mean and median values with and without inputing
-dmean - dmeanx
-dmedian - dmedianx
+dmeandiff <- dmean - dmeanx
+dmediandiff <- dmedian - dmedianx
 ```
+
+As can be seen from the values above, there is no difference between the original mean and median values from the estimated ones because the inputed values are the same as the mean and median from the original dataset.
+
+**original mean - inputted mean = `r dmeandiff`**
+**original median - inputted median = `r dmediandiff`**
 
 ### Are there differences in activity patterns between weekdays and weekends?
 
@@ -138,32 +138,5 @@ plot(dclnwendsum$sumstepsx, type="l", col="blue", xlab="Interval", ylab="Number 
   title(main="Weekend", font.main=2)
 
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
