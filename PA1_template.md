@@ -34,8 +34,10 @@ The code chunk below creates a summary of the steps taken per day, creates a his
 ds <- d %>% group_by(date) %>% summarise(sumsteps=sum(steps))
 
 ## histogram
+png(file="figures/plot1.png", width=480, height=480)
 dsum <- ggplot(data=ds, aes(x=sumsteps))
 dsum + geom_histogram(aes(fill=..count..), binwidth=3000)
+dev.off()
 
 ## mean number of steps taken per day
 dmean <- mean(ds$sumsteps) ## mean of total number of steps
@@ -45,6 +47,8 @@ dmedian <- median(ds$sumsteps) ## median of total number of steps
 dmedian
 ```
 
+![Sample panel plot](figures/plot1.png)
+
 ### What is the average daily activity pattern?
 
 Make a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis).
@@ -53,9 +57,13 @@ Make a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and 
 ## summarize and plot
 dint <- d %>% group_by(interval) %>% summarise(intmean=mean(steps))
 
+png(file="figures/plot2.png", width=480, height=480)
 dintline <- ggplot(data=dint, aes(x=interval, y=intmean))
   dintline + geom_line()
+dev.off()
 ```
+
+![Sample panel plot](figures/plot2.png)
 
 Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
 
@@ -83,8 +91,10 @@ dcln$stepsx[my.na] <- dcln$intmean[my.na] ## replace NAs with mean value
 ```{r, echo=TRUE, fig.align='center', fig.width=6, fig.height=3.5}
 dclns <- dcln %>% group_by(date) %>% summarise(sumstepsx=sum(stepsx)) ## summary
 
+png(file="figures/plot3.png", width=480, height=480)
 dclnshist <- ggplot(data=dclns, aes(x=sumstepsx))
 dclnshist + geom_histogram(aes(fill=..count..), binwidth=3000)
+dev.off()
 
 dmeanx <- mean(dclns$sumstepsx) ## mean of total number of steps
 dmeanx
@@ -92,6 +102,8 @@ dmeanx
 dmedianx <- median(dclns$sumstepsx) ## median of total number of steps
 dmedianx
 ```
+
+![Sample panel plot](figures/plot3.png)
 
 Calculate difference between the mean and median of the original dataset vs. the revised dataset with inputted values
 
@@ -127,10 +139,13 @@ dclnweeksum <- dclnweek %>% group_by(interval) %>% summarize(sumstepsx=sum(steps
 dclnwendsum <- dclnwend %>% group_by(interval) %>% summarize(sumstepsx=sum(stepsx))
 
 ## differences between weekday and weekend activities
+png(file="figures/plot4.png", width=480, height=480)
 par(mfrow=c(2, 1), mar=c(2, 5, 2, 5))
 plot(dclnweeksum$sumstepsx, type="l", col="blue", xlab="Interval", ylab="Number of Steps")
   title(main="Weekday", font.main=2)
 plot(dclnwendsum$sumstepsx, type="l", col="blue", xlab="Interval", ylab="Number of Steps")
   title(main="Weekend", font.main=2)
-
+dev.off()
 ```
+
+![Sample panel plot](figures/plot4.png)

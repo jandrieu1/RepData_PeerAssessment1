@@ -1,8 +1,3 @@
----
-title: "Reproducible Research: Peer Assessment 1"
-
----
-
 
 ### Pre-processing and clean-up
 
@@ -52,6 +47,8 @@ dmedian <- median(ds$sumsteps) ## median of total number of steps
 dmedian
 ```
 
+![Sample panel plot](figures/plot1.png)
+
 ### What is the average daily activity pattern?
 
 Make a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis).
@@ -65,6 +62,8 @@ dintline <- ggplot(data=dint, aes(x=interval, y=intmean))
   dintline + geom_line()
 dev.off()
 ```
+
+![Sample panel plot](figures/plot2.png)
 
 Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
 
@@ -104,6 +103,8 @@ dmedianx <- median(dclns$sumstepsx) ## median of total number of steps
 dmedianx
 ```
 
+![Sample panel plot](figures/plot3.png)
+
 Calculate difference between the mean and median of the original dataset vs. the revised dataset with inputted values
 
 ```{r, echo=TRUE}
@@ -138,7 +139,7 @@ dclnweeksum <- dclnweek %>% group_by(interval) %>% summarize(sumstepsx=sum(steps
 dclnwendsum <- dclnwend %>% group_by(interval) %>% summarize(sumstepsx=sum(stepsx))
 
 ## differences between weekday and weekend activities
-png(file="figures/plot5.png", width=480, height=480)
+png(file="figures/plot4.png", width=480, height=480)
 par(mfrow=c(2, 1), mar=c(2, 5, 2, 5))
 plot(dclnweeksum$sumstepsx, type="l", col="blue", xlab="Interval", ylab="Number of Steps")
   title(main="Weekday", font.main=2)
@@ -146,6 +147,8 @@ plot(dclnwendsum$sumstepsx, type="l", col="blue", xlab="Interval", ylab="Number 
   title(main="Weekend", font.main=2)
 dev.off()
 ```
+
+![Sample panel plot](figures/plot4.png)
 
 
 
