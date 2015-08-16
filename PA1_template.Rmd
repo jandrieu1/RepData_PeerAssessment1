@@ -129,7 +129,7 @@ dclnweeksum <- dclnweek %>% group_by(interval) %>% summarize(sumstepsx=sum(steps
 dclnwendsum <- dclnwend %>% group_by(interval) %>% summarize(sumstepsx=sum(stepsx))
 
 ## differences between weekday and weekend activities
-par(mfrow=c(2, 1), mar=c(2, 2.5, 2, 2.5))
+par(mfrow=c(2, 1), mar=c(2, 5, 2, 5))
 plot(dclnweeksum$sumstepsx, type="l", col="blue", xlab="Interval", ylab="Number of Steps")
   title(main="Weekday", font.main=2)
 plot(dclnwendsum$sumstepsx, type="l", col="blue", xlab="Interval", ylab="Number of Steps")
