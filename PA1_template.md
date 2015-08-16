@@ -34,7 +34,7 @@ The code chunk below creates a summary of the steps taken per day, creates a his
 ds <- d %>% group_by(date) %>% summarise(sumsteps=sum(steps))
 
 ## histogram
-png(file="figures/plot1.png", width=480, height=480)
+png(file="figures/plot1.png", width=600, height=400)
 dsum <- ggplot(data=ds, aes(x=sumsteps))
 dsum + geom_histogram(aes(fill=..count..), binwidth=3000)
 dev.off()
@@ -57,7 +57,7 @@ Make a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and 
 ## summarize and plot
 dint <- d %>% group_by(interval) %>% summarise(intmean=mean(steps))
 
-png(file="figures/plot2.png", width=480, height=480)
+png(file="figures/plot2.png", width=600, height=400)
 dintline <- ggplot(data=dint, aes(x=interval, y=intmean))
   dintline + geom_line()
 dev.off()
@@ -91,7 +91,7 @@ dcln$stepsx[my.na] <- dcln$intmean[my.na] ## replace NAs with mean value
 ```{r, echo=TRUE, fig.align='center', fig.width=6, fig.height=3.5}
 dclns <- dcln %>% group_by(date) %>% summarise(sumstepsx=sum(stepsx)) ## summary
 
-png(file="figures/plot3.png", width=480, height=480)
+png(file="figures/plot3.png", width=600, height=400)
 dclnshist <- ggplot(data=dclns, aes(x=sumstepsx))
 dclnshist + geom_histogram(aes(fill=..count..), binwidth=3000)
 dev.off()
@@ -139,7 +139,7 @@ dclnweeksum <- dclnweek %>% group_by(interval) %>% summarize(sumstepsx=sum(steps
 dclnwendsum <- dclnwend %>% group_by(interval) %>% summarize(sumstepsx=sum(stepsx))
 
 ## differences between weekday and weekend activities
-png(file="figures/plot4.png", width=480, height=480)
+png(file="figures/plot4.png", width=600, height=400)
 par(mfrow=c(2, 1), mar=c(2, 5, 2, 5))
 plot(dclnweeksum$sumstepsx, type="l", col="blue", xlab="Interval", ylab="Number of Steps")
   title(main="Weekday", font.main=2)
@@ -149,3 +149,6 @@ dev.off()
 ```
 
 ![Sample panel plot](figures/plot4.png)
+
+
+
