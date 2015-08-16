@@ -1,8 +1,3 @@
----
-title: "Reproducible Research: Peer Assessment 1"
-
----
-
 
 ### Pre-processing and clean-up
 
@@ -106,9 +101,10 @@ dmeandiff <- dmean - dmeanx
 dmediandiff <- dmedian - dmedianx
 ```
 
-As can be seen from the values above, there is no difference between the original mean and median values from the estimated ones because the inputed values are the same as the mean and median from the original dataset.
+The difference ends up being zero, i.e. **there is no difference between the original mean and median values from the ones with inputed value.** This is because the inputed values are the same as the mean and median from the original dataset.
 
 **original mean - inputted mean = `r dmeandiff`**
+
 **original median - inputted median = `r dmediandiff`**
 
 ### Are there differences in activity patterns between weekdays and weekends?
@@ -138,5 +134,3 @@ plot(dclnwendsum$sumstepsx, type="l", col="blue", xlab="Interval", ylab="Number 
   title(main="Weekend", font.main=2)
 
 ```
-
-
