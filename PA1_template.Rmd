@@ -4,29 +4,37 @@ title: "Reproducible Research: Peer Assessment 1"
 ---
 
 
-## Pre-processing and clean-up
+### Pre-processing and clean-up
+
+This first step downloads the required libraries and data files.
 
 ```{r, echo=TRUE}
-##Required Libraries
+## required libraries
 library(ggplot2)
 library(dplyr)
 
-##Download File
+## download file
 zipurl <- "http://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip"
 download.file(zipurl, "temp.zip", mode="wb")
 unzip("temp.zip", "activity.csv")
 dd <- read.table("activity.csv", sep=",", header=T)
-
-##Quick Look
-summary(dd)
-
-## subset data for complete cases only
-d <- d[complete.cases(dd), ] ## drops missing values
 ```
 
-## What is mean total number of steps taken per day?
+Next, we remove NAs and take a quick look at the data using the R summary command.
 
 ```{r, echo=TRUE}
+## remove NAs
+d <- dd[complete.cases(dd), ]
+
+## quick look
+summary(d)
+```
+
+### What is mean total number of steps taken per day?
+
+The code chunk below creates a summary of the steps taken per day, creates a histogram, and calculates both the **mean** and **median** steps per day.
+
+```{r, echo=TRUE, fig.align='center', fig.width=6, fig.height=3.5}
 ## summarize data
 ds <- d %>% group_by(date) %>% summarise(sumsteps=sum(steps))
 
@@ -42,26 +50,28 @@ dmedian <- median(ds$sumsteps) ## median of total number of steps
 dmedian
 ```
 
-## What is the average daily activity pattern?
+### What is the average daily activity pattern?
 
-Make a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis). Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
+Make a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis).
 
-
-```{r, echo=TRUE}
-
+```{r, echo=TRUE, fig.align='center', fig.width=6, fig.height=3.5}
 ## summarize and plot
 dint <- d %>% group_by(interval) %>% summarise(intmean=mean(steps))
 
 dintline <- ggplot(data=dint, aes(x=interval, y=intmean))
   dintline + geom_line()
+```
 
+Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
+
+```{r, echo=TRUE}
 ## max five minute interval
 subset(dint, intmean == max(intmean), select=c(interval, intmean))
 ```
 
-## Imputing missing values
+### Imputing missing values
 
-Note that there are a number of days/intervals where there are missing values (coded as NA). The presence of missing days may introduce bias into some calculations or summaries of the data. Calculate and report the total number of missing values in the dataset (i.e. the total number of rows with NAs). Then create a new dataset that is equal to the original dataset but with the missing data filled in.
+Calculate and report the total number of missing values in the dataset (i.e. the total number of rows with NAs). Then create a new dataset that is equal to the original dataset but with the missing data filled in.
 
 **Processing**
 ``` {r, echo=TRUE}
@@ -72,11 +82,11 @@ my.na <- is.na(dcln$steps)
 dcln$stepsx[my.na] <- dcln$intmean[my.na] ## replace NAs with mean value
 ```
 
-Make a histogram of the total number of steps taken each day and Calculate and report the mean and median total number of steps taken per day. Do these values differ from the estimates from the first part of the assignment? What is the impact of imputing missing data on the estimates of the total daily number of steps?
+Make a histogram of the total number of steps taken each day and Calculate and report the mean and median total number of steps taken per day.
 
-## Histogram of total number of steps taken per day
+### Histogram of total number of steps taken per day
 
-```{r, echo=TRUE}
+```{r, echo=TRUE, fig.align='center', fig.width=6, fig.height=3.5}
 dclns <- dcln %>% group_by(date) %>% summarise(sumstepsx=sum(stepsx)) ## summary
 
 dclnshist <- ggplot(data=dclns, aes(x=sumstepsx))
@@ -89,33 +99,44 @@ dmedianx <- median(dclns$sumstepsx) ## median of total number of steps
 dmedianx
 ```
 
-## Are there differences in activity patterns between weekdays and weekends?
+Do these values differ from the estimates from the first part of the assignment? What is the impact of imputing missing data on the estimates of the total daily number of steps?
+
+As can be seen from the values below, there is no difference between the original mean and median values from the estimated ones because the inputed values are the same as the mean and median from the original dataset.
+
+```{r, echo=TRUE}
+## difference in mean and median values with and without inputing
+dmean - dmeanx
+dmedian - dmedianx
+```
+
+### Are there differences in activity patterns between weekdays and weekends?
 
 Create a new factor variable in the dataset with two levels - "weekday" and "weekend" indicating whether a given date is a weekday or weekend day.
 
 The differences are clear when looking at the two line plots below.
 
-```{r, echo=TRUE}
+```{r, echo=TRUE, fig.align='center', fig.width=6, fig.height=4.5}
+## create weekeday variable
+dcln$week <- weekdays(as.Date(dcln$date))
 
-## create weekeday variable and subset
-dcln$week <- weekdays(as.Date(dcln$date)) ## create weekday / weekend variable
-
+## subset into the weekday and weekend datasets
 dclnweek <- subset(dcln, week == "Monday" | week == "Tuesday" | week == "Wednesday" |
                      week == "Thursday" | week == "Friday") ## week subset
 dclnwend <- subset(dcln, week == "Saturday" | week == "Sunday") ## weekend subset
 
-## summarize data
+## create sum of steps data by interval
 dclnweeksum <- dclnweek %>% group_by(interval) %>% summarize(sumstepsx=sum(stepsx))
 dclnwendsum <- dclnwend %>% group_by(interval) %>% summarize(sumstepsx=sum(stepsx))
 
 ## differences between weekday and weekend activities
-par(mfrow=c(2, 1))
+par(mfrow=c(2, 1), mar=c(2, 2.5, 2, 2.5))
 plot(dclnweeksum$sumstepsx, type="l", col="blue", xlab="Interval", ylab="Number of Steps")
   title(main="Weekday", font.main=2)
 plot(dclnwendsum$sumstepsx, type="l", col="blue", xlab="Interval", ylab="Number of Steps")
   title(main="Weekend", font.main=2)
 
 ```
+
 
 
 
