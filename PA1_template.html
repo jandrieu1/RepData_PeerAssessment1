@@ -152,12 +152,11 @@ dmedianx</code></pre>
 <pre><code>## [1] 10765</code></pre>
 <p>Calculate difference between the mean and median of the original dataset vs. the revised dataset with inputted values</p>
 <pre class="r"><code>## difference in mean and median values with and without inputing
-dmean - dmeanx</code></pre>
-<pre><code>## [1] 0</code></pre>
-<pre class="r"><code>dmedian - dmedianx</code></pre>
-<pre><code>## [1] 0</code></pre>
-<p>As can be seen from the values above, there is no difference between the original mean and median values from the estimated ones because the inputed values are the same as the mean and median from the original dataset.</p>
-<p>original mean - inputted mean = 0</p>
+dmeandiff &lt;- dmean - dmeanx
+dmediandiff &lt;- dmedian - dmedianx</code></pre>
+<p>The difference ends up being zero, i.e. <strong>there is no difference between the original mean and median values from the ones with inputed value.</strong> This is because the inputed values are the same as the mean and median from the original dataset.</p>
+<p><strong>original mean - inputted mean = 0</strong></p>
+<p><strong>original median - inputted median = 0</strong></p>
 </div>
 <div id="are-there-differences-in-activity-patterns-between-weekdays-and-weekends" class="section level3">
 <h3>Are there differences in activity patterns between weekdays and weekends?</h3>
